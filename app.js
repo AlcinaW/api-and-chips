@@ -1,5 +1,6 @@
 //require express package
 const express = require('express');
+const mongoose = require('mongoose');
 //call express 
 const app = express();
 
@@ -17,6 +18,10 @@ app.get('/', (request, response) => {
 app.get('/posts', (request, response) => {
     response.send('We are on posts');
 });
+
+//Connect to database
+mongoose.connect('');
+
 //listen to port 3000
 app.listen(3000);
 
