@@ -1,6 +1,7 @@
 //require express package
 const express = require('express');
 const mongoose = require('mongoose');
+require('dotenv/config');
 //call express 
 const app = express();
 
@@ -20,7 +21,10 @@ app.get('/posts', (request, response) => {
 });
 
 //Connect to database
-mongoose.connect('');
+mongoose.connect(
+    process.env.DB_CONNECTION,
+    { useNewUrlParser: true }, //add object
+    () => console.log('connected to database!'));
 
 //listen to port 3000
 app.listen(3000);
