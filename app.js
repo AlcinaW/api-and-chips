@@ -10,14 +10,16 @@ const app = express();
 // app.use('/posts', () => {
 //     console.log('Middleware running');
 // });
+//Import Routes
+const postsRoute = require('./routes/posts');
+
+//every time you go to /posts, use this route with middleware
+app.use('/posts', postsRoute);
 
 //ROUTES
 //can add, edit, post, etc. and get a response back ex. sending a form
 app.get('/', (request, response) => {
     response.send('We are on home');
-});
-app.get('/posts', (request, response) => {
-    response.send('We are on posts');
 });
 
 //Connect to database
