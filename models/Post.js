@@ -1,8 +1,8 @@
-const mongoose = requite('mongoose');
+const mongoose = require('mongoose');
 
 //create schema, how the post/data looks
 
-const PostSchema = mongoose.Scheme({
+const PostSchema = mongoose.Schema({
     title: {
         type: String,
         required: true
