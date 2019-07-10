@@ -1,12 +1,16 @@
 //require express package
 const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv/config');
 //call express 
 const app = express();
+const mongoose = require('mongoose');
+const bodyParser = require('body-parser');
+require('dotenv/config');
 
 //Middlewares
 //the function that executes when routes are being hit 
+//any time hit a route, use body-parser
+app.use(bodyParser.json());
+
 // app.use('/posts', () => {
 //     console.log('Middleware running');
 // });

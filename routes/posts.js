@@ -11,8 +11,18 @@ router.get('/', (request, response) => {
 //     response.send('Specific posts');
 // });
 
-router.post('/', (request, response) => {
-    console.log(request.body);
+router.post('/', async (request, response) => {
+    const post = new Post({
+        title: request.body.title,
+        description: request.body.description
+    });
+    //save to database, returns a promise
+    try {
+        const savedPost = await post.save();
+        response.json(savedPost);
+    } catch (err) {
+        response.json({ message: err });
+    }
 });
 
 module.exports = router;
