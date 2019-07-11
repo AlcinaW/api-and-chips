@@ -3,14 +3,18 @@ const router = express.Router();
 //create the post by importing the model
 const Post = require('../models/Post');
 
-router.get('/', (request, response) => {
-    response.send('We are on posts');
+
+//Get back all posts
+router.get('/', async (request, response) => {
+    try {
+        const posts = await Post.find();
+        response.json(posts);
+    } catch (err) {
+        response.json({ message: err });
+    }
 });
 
-// router.get('/specific', (request, response) => {
-//     response.send('Specific posts');
-// });
-
+//Submit a post
 router.post('/', async (request, response) => {
     const post = new Post({
         title: request.body.title,
@@ -20,6 +24,26 @@ router.post('/', async (request, response) => {
     try {
         const savedPost = await post.save();
         response.json(savedPost);
+    } catch (err) {
+        response.json({ message: err });
+    }
+});
+
+//Get back a specific post
+router.get('/:postId', async (request, response) => {
+    try {
+        const post = await Post.findById(response.params.postId);
+        response.json(post);
+    } catch (err) {
+        response.json({ message: err });
+    }
+});
+
+//Delete Post
+router.delete('/:postId', async (request, response) => {
+    try {
+        const removedPost = await Post.remove({ _id: request.params.postId });
+        response.json(removedPost);
     } catch (err) {
         response.json({ message: err });
     }
