@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 //create empty router 
-router.post('/register', (response, request) => {
+router.post('/register', (request, response) => {
     response.send('Register!');
 });
 
