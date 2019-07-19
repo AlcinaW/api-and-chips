@@ -1,9 +1,15 @@
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 //Connect to database
-mongoose.connect('');
+mongoose.connect(
+    process.env.DB_CONNECT,
+    { useNewUrlParser: true },
+    () => console.log('connected to database!'));
 
 //Import routes
 //navigate to route folder and get this file 
