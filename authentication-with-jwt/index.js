@@ -3,6 +3,10 @@ const app = express();
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
+//Import routes
+//navigate to route folder and get this file 
+const authRoute = require('./routes/auth');
+
 dotenv.config();
 
 //Connect to database
@@ -11,11 +15,9 @@ mongoose.connect(
     { useNewUrlParser: true },
     () => console.log('connected to database!'));
 
-//Import routes
-//navigate to route folder and get this file 
-const authRoute = require('./routes/auth');
-
-//Middlewares
+//Middlewares - can now send POST requests
+app.use(express.json());
+//Route Middlewares
 //every auth route requires going to this URL
 app.use('/api/user', authRoute);
 
