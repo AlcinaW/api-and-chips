@@ -18,7 +18,9 @@ router.post('/register', async (request, response) => {
     const { error } = Joi.validate(request.body, schema);
     //check in Postman what the object is with the errors
     //show the error message
-    response.send(error.details[0].message);
+    if (error) return response.status(400).send(error.details[0].message);
+
+
     //create new user with POST
     // const user = new User({
     //     name: request.body.name,
