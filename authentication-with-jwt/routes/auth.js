@@ -15,8 +15,10 @@ const schema = {
 //create empty router 
 router.post('/register', async (request, response) => {
     //validate the data before making the user
-    const validation = Joi.validate(request.body, schema);
-    response.send(validation);
+    const { error } = Joi.validate(request.body, schema);
+    //check in Postman what the object is with the errors
+    //show the error message
+    response.send(error.details[0].message);
     //create new user with POST
     // const user = new User({
     //     name: request.body.name,
