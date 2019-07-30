@@ -1,8 +1,7 @@
 const router = require('express').Router();
 const User = require('../model/User');
+cosnt bcrypt = require('bcryptjs');
 const { registerValidation } = require('../validation');
-
-
 
 //create empty router 
 router.post('/register', async (request, response) => {
@@ -13,6 +12,9 @@ router.post('/register', async (request, response) => {
     //check if user is already in database
     const emailExist = await User.findOne({ email: request.body.email });
     if (emailExist) return response.status(400).send('Email already exists');
+
+    //hash passwords, generate salt
+    const salt = await bcrypt.gentSalt(10);
 
     //create new user with POST
     const user = new User({
