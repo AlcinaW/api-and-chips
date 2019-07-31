@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const User = require('../model/User');
-cosnt bcrypt = require('bcryptjs');
+const bcrypt = require('bcryptjs');
 const { registerValidation } = require('../validation');
 
 //create empty router 
@@ -15,12 +15,13 @@ router.post('/register', async (request, response) => {
 
     //hash passwords, generate salt
     const salt = await bcrypt.gentSalt(10);
+    const hashedPassword = await bcrypt.hash(request.body.password, salt);
 
     //create new user with POST
     const user = new User({
         name: request.body.name,
         email: request.body.email,
-        password: request.body.password
+        password: hashedPassword
     });
     try {
         const savedUser = await user.save();
