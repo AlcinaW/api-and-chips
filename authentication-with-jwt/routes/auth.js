@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const User = require('../model/User');
 const bcrypt = require('bcryptjs');
-const { registerValidation } = require('../validation');
+const { registerValidation, loginValidation } = require('../validation');
 
 //create empty router 
 router.post('/register', async (request, response) => {
@@ -14,7 +14,7 @@ router.post('/register', async (request, response) => {
     if (emailExist) return response.status(400).send('Email already exists');
 
     //hash passwords, generate salt
-    const salt = await bcrypt.gentSalt(10);
+    const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(request.body.password, salt);
 
     //create new user with POST
@@ -25,12 +25,26 @@ router.post('/register', async (request, response) => {
     });
     try {
         const savedUser = await user.save();
-        response.send(savedUser);
+        response.send({ user: user.Id });
     } catch (err) {
         response.status(400).send(err);
     }
 
 });
 
+//log in 
+router.post('/login', async (request, response) => {
+
+    const { error } = loginValidation(request.body);
+    if (error) return response.status(400).send(error.details[0].message);
+    //check if email exists
+    const user = await User.findOne({ email: request.body.email });
+    if (!user) return response.status(400).send('Email or password is wrong');
+    //is password correct?
+    const validPassword = await bcrypt.compare(request.body.password, user.password);
+    if (!validPassword) return response.status(400).send('Invalid password or email');
+
+    response.send('Logged in');
+});
 
 module.exports = router;
