@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 //Import routes
 //navigate to route folder and get this file 
 const authRoute = require('./routes/auth');
+const postRoute = require('./routes/posts');
 
 dotenv.config();
 
@@ -20,6 +21,7 @@ app.use(express.json());
 //Route Middlewares
 //every auth route requires going to this URL
 app.use('/api/user', authRoute);
+app.use('/api/posts', postRoute);
 
 //callback to check if the server is running
 app.listen(3000, () => console.log('Server is a go!'));
