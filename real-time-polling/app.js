@@ -19,4 +19,4 @@ app.use(cors());
 const port = 3000;
 
 //start server 
-app.listen();
+app.listen(port, () => console.log(`Server started on port ${port}`));
