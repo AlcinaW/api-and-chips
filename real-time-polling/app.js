@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 //Body parser middleware
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ encoded: false }));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 //enable CORS
 app.use(cors());
